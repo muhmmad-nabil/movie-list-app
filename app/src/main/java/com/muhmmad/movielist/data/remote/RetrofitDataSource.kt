@@ -8,5 +8,5 @@ import retrofit2.http.Header
 
 interface RetrofitDataSource {
     @GET("3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc")
-    suspend fun getMovies(@Header("Authorization") accessToken: String): Resource<Response<MoviesResponse>>
+    suspend fun getMovies(@Header("Authorization") accessToken: String): Response<MoviesResponse>
 }
