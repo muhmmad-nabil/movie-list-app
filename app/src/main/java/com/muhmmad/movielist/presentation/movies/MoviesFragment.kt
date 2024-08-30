@@ -20,8 +20,10 @@ class MoviesFragment : Fragment() {
     private var _binding: FragmentMoviesBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MoviesViewModel by viewModels()
-    private val moviesAdapter = MoviesAdapter {
-        findNavController().navigate(R.id.action_moviesFragment_to_movieDetailsFragment)
+    private val moviesAdapter = MoviesAdapter { movie ->
+        val bundle = Bundle()
+        bundle.putSerializable("movie", movie)
+        findNavController().navigate(R.id.action_moviesFragment_to_movieDetailsFragment, bundle)
     }
 
     override fun onCreateView(

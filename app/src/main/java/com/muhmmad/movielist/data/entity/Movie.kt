@@ -1,6 +1,7 @@
 package com.muhmmad.movielist.data.entity
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Movie(
     val adult: Boolean,
@@ -25,4 +26,4 @@ data class Movie(
     val voteAverage: Double,
     @SerializedName("vote_count")
     val voteCount: Int
-)
+) : Serializable
