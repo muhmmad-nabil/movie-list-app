@@ -7,4 +7,5 @@
     <string name="api_access_token">eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiYjljMTU2YjQ1ZGIxOWZjODEwN2M1NmRhYTI0NzkyNCIsIm5iZiI6MTcyNDk2ODA0Mi44OTY2MTcsInN1YiI6IjYyZjNjYjI1MGI1ZmQ2MDA3YzUyNmU2MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RpQW5fUea7cwY8Z0wkfmPpqb16vt-g8_3s1BIwLkl3o</string>
     <string name="movie_poster">Movie poster</string>
     <string name="movie_info">%s , %s</string>
+    <string name="rank_text">%d</string>
 </resources>

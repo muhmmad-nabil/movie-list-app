@@ -12,6 +12,7 @@ import com.muhmmad.movielist.domain.use_case.RemoveMovieFromFavouritesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
@@ -28,7 +29,7 @@ class MoviesViewModel @Inject constructor(
     private val makeMovieFavouriteUseCase: MakeMovieFavouriteUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow(MoviesUIState())
-    val state = _state.asStateFlow()
+    val state = _state.asSharedFlow()
 
     fun getMovies(accessToken: String) {
         viewModelScope.launch(IO) {
@@ -70,6 +71,18 @@ class MoviesViewModel @Inject constructor(
                     movies = movies
                 )
             }
+        }
+    }
+
+    fun makeMovieFavourite(id: Int) {
+        viewModelScope.launch(IO) {
+            makeMovieFavouriteUseCase(id)
+        }
+    }
+
+    fun removeMovieFromFavourites(id: Int) {
+        viewModelScope.launch(IO) {
+            removeMovieFromFavouritesUseCase(id)
         }
     }
 

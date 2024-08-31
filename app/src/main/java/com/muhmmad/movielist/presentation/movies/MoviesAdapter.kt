@@ -1,6 +1,5 @@
 package com.muhmmad.movielist.presentation.movies
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -14,7 +13,7 @@ import com.muhmmad.movielist.presentation.utils.DiffUtilCallback
 
 class MoviesAdapter(
     private val onItemClickListener: (movie: Movie) -> Unit,
-    private val onFavouriteClickListener: (movie: Movie, index: Int) -> Unit
+    private val onFavouriteClickListener: (movie: Movie, index: Int, adapter: MoviesAdapter) -> Unit
 ) :
     RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
     private val data: MutableList<Movie> = mutableListOf()
@@ -35,6 +34,8 @@ class MoviesAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
             val item = data[position]
+            val ctx = holder.binding.root.context
+            tvRank.text = ctx.getString(R.string.rank_text, position + 1)
             tvMovie.text = item.title
             tvReleaseDate.text = item.releaseDate
             tvRating.text = item.voteAverage.toString()
@@ -42,14 +43,21 @@ class MoviesAdapter(
                 crossfade(true)
                 transformations(RoundedCornersTransformation(16f))
             }
-            ivFavourite.setImageResource(if (item.isFavourite) R.drawable.ic_like else R.drawable.ic_unlike)
+
+            if (item.isFavourite) {
+                ivFavourite.setImageResource(R.drawable.ic_like)
+                ivFavourite.tag = "favourite"
+            } else {
+                ivFavourite.setImageResource(R.drawable.ic_unlike)
+                ivFavourite.tag = "not favourite"
+            }
 
             root.setOnClickListener {
                 onItemClickListener(item)
             }
 
             ivFavourite.setOnClickListener {
-                onFavouriteClickListener(item, position)
+                onFavouriteClickListener(item, position, this@MoviesAdapter)
             }
         }
     }
@@ -61,6 +69,9 @@ class MoviesAdapter(
         data.addAll(newData)
         diffResult.dispatchUpdatesTo(this)
     }
-}
 
-private const val TAG = "MoviesAdapter"
+    fun changeItem(index: Int, movie: Movie) {
+        data[index] = movie
+        notifyItemChanged(index)
+    }
+}

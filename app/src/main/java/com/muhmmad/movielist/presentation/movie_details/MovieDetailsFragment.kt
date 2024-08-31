@@ -19,6 +19,7 @@ class MovieDetailsFragment : Fragment(), OnClickListener {
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MovieDetailsViewModel by viewModels()
+    private lateinit var movie: Movie
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,13 +31,14 @@ class MovieDetailsFragment : Fragment(), OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movie = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-            arguments?.getSerializable("movie", Movie::class.java)
-        else arguments?.getSerializable("movie") as Movie
+        movie =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) arguments?.getSerializable(
+                "movie",
+                Movie::class.java
+            )!!
+            else arguments?.getSerializable("movie") as Movie
 
-        movie?.let {
-            initViews(it)
-        }
+        initViews(movie)
     }
 
     private fun initViews(movie: Movie) {
@@ -49,8 +51,31 @@ class MovieDetailsFragment : Fragment(), OnClickListener {
             tvMovieInfo.text =
                 getString(R.string.movie_info, movie.popularity.toString(), movie.originalLanguage)
 
-            ivFavourite.setOnClickListener(this@MovieDetailsFragment)
+            if (movie.isFavourite) {
+                ivFavourite.setImageResource(R.drawable.ic_like)
+                ivFavourite.tag = "favourite"
+            } else {
+                ivFavourite.setImageResource(R.drawable.ic_unlike)
+                ivFavourite.tag = "not favourite"
+            }
 
+            ivFavourite.setOnClickListener(this@MovieDetailsFragment)
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when (v) {
+            binding.ivFavourite -> {
+                if (movie.isFavourite) {
+                    viewModel.removeMovieFromFavourites(movie.id)
+                    binding.ivFavourite.setImageResource(R.drawable.ic_unlike)
+                    binding.ivFavourite.tag = "not favourite"
+                } else {
+                    viewModel.makeMovieFavourite(movie.id)
+                    binding.ivFavourite.setImageResource(R.drawable.ic_like)
+                    binding.ivFavourite.tag = "favourite"
+                }
+            }
         }
     }
 
@@ -58,13 +83,5 @@ class MovieDetailsFragment : Fragment(), OnClickListener {
         super.onDestroyView()
         binding.ivFavourite.setOnClickListener(null)
         _binding = null
-    }
-
-    override fun onClick(v: View?) {
-        when (v) {
-            binding.ivFavourite -> {
-
-            }
-        }
     }
 }
