@@ -66,7 +66,3 @@ This app is structured as a multi-module project for better separation of concer
 - app: Manages UI components and user interactions.
 - data: Handles data management and repository implementations.
 - domain: Contains use cases and business logic.
-
-## Application Requirements
-
-You need to create an application that displays a list of the best movies in 2024. Each movie should be clickable, leading to a details page containing all relevant information.
