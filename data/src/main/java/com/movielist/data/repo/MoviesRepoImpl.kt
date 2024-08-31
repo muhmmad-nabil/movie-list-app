@@ -13,8 +13,8 @@ class MoviesRepoImpl(
     private val remoteDataSource: RetrofitDataSource,
     private val localDataSource: LocalDataSource
 ) : MoviesRepo {
-    override suspend fun getMovies(accessToken: String): Resource<Movies> {
-        return when (val result = remoteDataSource.getMovies(accessToken).checkResponse()) {
+    override suspend fun getMovies(): Resource<Movies> {
+        return when (val result = remoteDataSource.getMovies().checkResponse()) {
             is Resource.Success -> Resource.Success(result.data?.toLocalModel()!!)
             is Resource.Error -> Resource.Error(result.message)
             is Resource.Loading -> Resource.Loading()
