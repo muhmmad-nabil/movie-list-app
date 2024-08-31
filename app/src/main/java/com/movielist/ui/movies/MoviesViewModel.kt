@@ -28,9 +28,9 @@ class MoviesViewModel @Inject constructor(
     private val _state = MutableStateFlow(MoviesUIState())
     val state = _state.asSharedFlow()
 
-    fun getMovies(accessToken: String) {
+    fun getMovies() {
         viewModelScope.launch(IO) {
-            getMoviesUseCase.invoke("Bearer $accessToken").let { response ->
+            getMoviesUseCase.invoke().let { response ->
                 when (response) {
                     is Loading -> {
                         _state.update { it.copy(isLoading = true) }
@@ -55,6 +55,7 @@ class MoviesViewModel @Inject constructor(
 
     private fun checkFavouriteMovies(movies: List<Movie>) {
         viewModelScope.launch(IO) {
+            //get Favourite movies from local database
             val favouriteMovies = getFavouriteUseCase()
             movies.forEach {
                 if (favouriteMovies.contains(it.id)) {

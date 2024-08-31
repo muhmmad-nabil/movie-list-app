@@ -45,10 +45,10 @@ class MoviesAdapter(
 
             if (item.isFavourite) {
                 ivFavourite.setImageResource(R.drawable.ic_like)
-                ivFavourite.tag = "favourite"
+                ivFavourite.tag = ctx.getString(R.string.favourite)
             } else {
                 ivFavourite.setImageResource(R.drawable.ic_unlike)
-                ivFavourite.tag = "not favourite"
+                ivFavourite.tag = ctx.getString(R.string.not_favourite)
             }
 
             root.setOnClickListener {
@@ -61,6 +61,7 @@ class MoviesAdapter(
         }
     }
 
+    //add data in recyclerview
     fun setData(newData: List<Movie>) {
         val diffCallback = DiffUtilCallback(data, newData)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
@@ -69,6 +70,7 @@ class MoviesAdapter(
         diffResult.dispatchUpdatesTo(this)
     }
 
+    //change item in recyclerview with index
     fun changeItem(index: Int, movie: Movie) {
         data[index] = movie
         notifyItemChanged(index)

@@ -23,6 +23,14 @@ android {
                 "proguard-rules.pro"
             )
         }
+
+        forEach {
+            it.buildConfigField(
+                "String",
+                "ACCESS_TOKEN",
+                "\"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiYjljMTU2YjQ1ZGIxOWZjODEwN2M1NmRhYTI0NzkyNCIsIm5iZiI6MTcyNDk2ODA0Mi44OTY2MTcsInN1YiI6IjYyZjNjYjI1MGI1ZmQ2MDA3YzUyNmU2MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RpQW5fUea7cwY8Z0wkfmPpqb16vt-g8_3s1BIwLkl3o\""
+            )
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -30,6 +38,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 

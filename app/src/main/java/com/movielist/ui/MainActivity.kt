@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateConfig(wrapper: ContextThemeWrapper) {
+        //force to works on English
         currentLocale?.let { Locale.setDefault(it) }
         val configuration = Configuration()
         configuration.setLocale(currentLocale)

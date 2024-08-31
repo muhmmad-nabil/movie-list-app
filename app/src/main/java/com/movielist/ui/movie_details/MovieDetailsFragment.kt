@@ -31,6 +31,7 @@ class MovieDetailsFragment : Fragment(), OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //get movie object from movies fragment
         movie =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) arguments?.getSerializable(
                 "movie",
@@ -53,10 +54,10 @@ class MovieDetailsFragment : Fragment(), OnClickListener {
 
             if (movie.isFavourite) {
                 ivFavourite.setImageResource(R.drawable.ic_like)
-                ivFavourite.tag = "favourite"
+                ivFavourite.tag = getString(R.string.favourite)
             } else {
                 ivFavourite.setImageResource(R.drawable.ic_unlike)
-                ivFavourite.tag = "not favourite"
+                ivFavourite.tag = getString(R.string.not_favourite)
             }
 
             ivFavourite.setOnClickListener(this@MovieDetailsFragment)
@@ -69,11 +70,11 @@ class MovieDetailsFragment : Fragment(), OnClickListener {
                 if (movie.isFavourite) {
                     viewModel.removeMovieFromFavourites(movie.id)
                     binding.ivFavourite.setImageResource(R.drawable.ic_unlike)
-                    binding.ivFavourite.tag = "not favourite"
+                    binding.ivFavourite.tag = getString(R.string.not_favourite)
                 } else {
                     viewModel.makeMovieFavourite(movie.id)
                     binding.ivFavourite.setImageResource(R.drawable.ic_like)
-                    binding.ivFavourite.tag = "favourite"
+                    binding.ivFavourite.tag = getString(R.string.favourite)
                 }
             }
         }
