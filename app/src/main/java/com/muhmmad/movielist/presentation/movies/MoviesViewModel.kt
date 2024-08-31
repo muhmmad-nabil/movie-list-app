@@ -4,7 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.muhmmad.movielist.data.entity.Movie
 import com.muhmmad.movielist.data.entity.Resource
+import com.muhmmad.movielist.domain.use_case.GetFavouriteUseCase
 import com.muhmmad.movielist.domain.use_case.GetMoviesUseCase
+import com.muhmmad.movielist.domain.use_case.MakeMovieFavouriteUseCase
+import com.muhmmad.movielist.domain.use_case.RemoveMovieFromFavouritesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +20,12 @@ import javax.inject.Inject
 private const val TAG = "MoviesViewModel"
 
 @HiltViewModel
-class MoviesViewModel @Inject constructor(private val useCase: GetMoviesUseCase) : ViewModel() {
+class MoviesViewModel @Inject constructor(
+    private val useCase: GetMoviesUseCase,
+    private val getFavouriteUseCase: GetFavouriteUseCase,
+    private val removeMovieFromFavouritesUseCase: RemoveMovieFromFavouritesUseCase,
+    private val makeMovieFavouriteUseCase: MakeMovieFavouriteUseCase
+) : ViewModel() {
     private val _state = MutableStateFlow(MoviesUIState())
     val state = _state.asSharedFlow()
 
@@ -30,12 +38,7 @@ class MoviesViewModel @Inject constructor(private val useCase: GetMoviesUseCase)
                     }
 
                     is Resource.Success -> {
-                        _state.update {
-                            it.copy(
-                                isLoading = false,
-                                movies = response.data?.results ?: emptyList()
-                            )
-                        }
+                        checkFavouriteMovies(response.data?.results ?: emptyList())
                     }
 
                     is Resource.Error -> {
@@ -50,6 +53,40 @@ class MoviesViewModel @Inject constructor(private val useCase: GetMoviesUseCase)
             }
         }
     }
+
+    private fun checkFavouriteMovies(movies: List<Movie>) {
+        viewModelScope.launch(IO) {
+            val favouriteMovies = getFavouriteUseCase()
+            movies.forEach {
+                if (favouriteMovies.contains(it.id)) {
+                    it.isFavourite = true
+                }
+            }
+
+            _state.update {
+                it.copy(
+                    isLoading = false,
+                    movies = movies
+                )
+            }
+        }
+    }
+
+    fun changeFavouriteStatus(movie: Movie, index: Int) {
+        viewModelScope.launch(IO) {
+            if (movie.isFavourite) removeMovieFromFavouritesUseCase(movie.id)
+            else makeMovieFavouriteUseCase(movie.id)
+            movie.isFavourite = !movie.isFavourite
+
+            val movies = _state.value.movies.toMutableList()
+            movies[index] = movie
+
+            _state.update {
+                it.copy(movies = movies)
+            }
+        }
+    }
+
 
     data class MoviesUIState(
         val isLoading: Boolean = false,

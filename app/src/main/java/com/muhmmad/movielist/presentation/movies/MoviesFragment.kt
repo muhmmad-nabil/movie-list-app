@@ -20,11 +20,13 @@ class MoviesFragment : Fragment() {
     private var _binding: FragmentMoviesBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MoviesViewModel by viewModels()
-    private val moviesAdapter = MoviesAdapter { movie ->
+    private val moviesAdapter = MoviesAdapter(onItemClickListener = { movie ->
         val bundle = Bundle()
         bundle.putSerializable("movie", movie)
         findNavController().navigate(R.id.action_moviesFragment_to_movieDetailsFragment, bundle)
-    }
+    }, onFavouriteClickListener = { movie, index ->
+        viewModel.changeFavouriteStatus(movie, index)
+    })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

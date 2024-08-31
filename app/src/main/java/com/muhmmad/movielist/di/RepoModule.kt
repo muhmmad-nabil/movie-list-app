@@ -1,5 +1,6 @@
 package com.muhmmad.movielist.di
 
+import com.muhmmad.movielist.data.local.LocalDataSource
 import com.muhmmad.movielist.data.remote.RetrofitDataSource
 import com.muhmmad.movielist.data.repo.MoviesRepoImpl
 import com.muhmmad.movielist.domain.repo.MoviesRepo
@@ -12,5 +13,8 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 object RepoModule {
     @Provides
-    fun provideMoviesRepo(dataSource: RetrofitDataSource): MoviesRepo = MoviesRepoImpl(dataSource)
+    fun provideMoviesRepo(
+        remoteDataSource: RetrofitDataSource,
+        localDataSource: LocalDataSource
+    ): MoviesRepo = MoviesRepoImpl(remoteDataSource, localDataSource)
 }

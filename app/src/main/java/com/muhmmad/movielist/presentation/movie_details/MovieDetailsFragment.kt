@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import coil.load
 import com.muhmmad.movielist.R
 import com.muhmmad.movielist.data.entity.Movie
@@ -17,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MovieDetailsFragment : Fragment(), OnClickListener {
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: MovieDetailsViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

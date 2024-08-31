@@ -6,10 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
+import com.muhmmad.movielist.R
 import com.muhmmad.movielist.data.entity.Movie
 import com.muhmmad.movielist.databinding.MovieLayoutBinding
 
-class MoviesAdapter(private val onItemClickListener: (movie: Movie) -> Unit) :
+class MoviesAdapter(
+    private val onItemClickListener: (movie: Movie) -> Unit,
+    private val onFavouriteClickListener: (movie: Movie, index: Int) -> Unit
+) :
     RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
     private val data: MutableList<Movie> = mutableListOf()
 
@@ -36,16 +40,24 @@ class MoviesAdapter(private val onItemClickListener: (movie: Movie) -> Unit) :
                 crossfade(true)
                 transformations(RoundedCornersTransformation(16f))
             }
+            ivFavourite.setImageResource(if (item.isFavourite) R.drawable.ic_like else R.drawable.ic_unlike)
 
             root.setOnClickListener {
                 onItemClickListener(item)
+            }
+
+            ivFavourite.setOnClickListener {
+                onFavouriteClickListener(item, position)
             }
         }
     }
 
     fun addItems(movies: List<Movie>) {
+        Log.i(TAG, "addItems: $movies")
         data.clear()
         data.addAll(movies)
         notifyDataSetChanged()
     }
 }
+
+private const val TAG = "MoviesAdapter"
