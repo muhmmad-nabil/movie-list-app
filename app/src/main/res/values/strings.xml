@@ -4,4 +4,7 @@
     <string name="movie_poster">Movie poster</string>
     <string name="movie_info">%s , %s</string>
     <string name="rank_text">%d</string>
+    <string name="favourite">favourite</string>
+    <string name="not_favourite">not favourite</string>
+    <string name="no_internet">No Internet</string>
 </resources>

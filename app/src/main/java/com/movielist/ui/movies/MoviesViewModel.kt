@@ -55,6 +55,7 @@ class MoviesViewModel @Inject constructor(
 
     private fun checkFavouriteMovies(movies: List<Movie>) {
         viewModelScope.launch(IO) {
+            //get Favourite movies from local database
             val favouriteMovies = getFavouriteUseCase()
             movies.forEach {
                 if (favouriteMovies.contains(it.id)) {

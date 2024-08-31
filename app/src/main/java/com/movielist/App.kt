@@ -10,6 +10,7 @@ import java.util.Locale
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
+        //Make app language is english
         val local = Locale.ENGLISH
         MainActivity.currentLocale = local
         Locale.setDefault(local)
