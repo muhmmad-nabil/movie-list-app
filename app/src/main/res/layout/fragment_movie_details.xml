@@ -1,113 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    tools:context=".ui.movie_details.MovieDetailsFragment">
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none"
-        tools:context=".presentation.movie_details.MovieDetailsFragment">
+        android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
+            android:id="@+id/iv_movie"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="350dp"
+            android:contentDescription="@string/movie_poster"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@color/black" />
 
-            <ImageView
-                android:id="@+id/iv_movie"
-                android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:contentDescription="@string/movie_poster"
-                android:scaleType="fitXY"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@color/black" />
+        <TextView
+            android:id="@+id/tv_movie"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="20dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@id/iv_favourite"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_movie"
+            tools:text="Test movie name" />
 
-            <TextView
-                android:id="@+id/tv_movie"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="20dp"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@id/iv_favourite"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_movie"
-                tools:text="Test movie name" />
-
-            <TextView
-                android:id="@+id/tv_movie_info"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="@id/tv_movie"
-                app:layout_constraintStart_toStartOf="@id/tv_movie"
-                app:layout_constraintTop_toBottomOf="@id/tv_movie"
-                tools:text="2022 . Action/Adventure . 120 min" />
+        <TextView
+            android:id="@+id/tv_movie_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/tv_movie"
+            app:layout_constraintStart_toStartOf="@id/tv_movie"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie"
+            tools:text="2022 . Action/Adventure . 120 min" />
 
 
-            <ImageView
-                android:id="@+id/iv_favourite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:contentDescription="@string/favourite_image"
-                android:src="@drawable/ic_unlike"
-                app:layout_constraintBottom_toBottomOf="@id/tv_movie_info"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tv_movie"
-                app:layout_constraintTop_toTopOf="@id/tv_movie" />
+        <ImageView
+            android:id="@+id/iv_favourite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:contentDescription="@string/favourite_image"
+            android:src="@drawable/ic_unlike"
+            app:layout_constraintBottom_toBottomOf="@id/tv_movie_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_movie"
+            app:layout_constraintTop_toTopOf="@id/tv_movie" />
 
-            <TextView
-                android:id="@+id/tv_overview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="20dp"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_movie_info"
-                tools:text="this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , " />
+        <TextView
+            android:id="@+id/tv_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_info"
+            tools:text="this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , this is test text , " />
 
-            <TextView
-                android:id="@+id/tv_rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="@drawable/movie_items_background"
-                android:drawablePadding="10dp"
-                android:gravity="center"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                app:drawableStartCompat="@drawable/ic_star"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_release_date"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_overview"
-                tools:text="12/12/2022" />
+        <TextView
+            android:id="@+id/tv_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/movie_items_background"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            app:drawableStartCompat="@drawable/ic_star"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_release_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_overview"
+            tools:text="12/12/2022" />
 
-            <TextView
-                android:id="@+id/tv_release_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="@drawable/movie_items_background"
-                android:drawablePadding="10dp"
-                android:gravity="center"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                app:drawableStartCompat="@drawable/ic_date"
+        <TextView
+            android:id="@+id/tv_release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/movie_items_background"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            app:drawableStartCompat="@drawable/ic_date"
 
-                app:layout_constraintBottom_toBottomOf="@id/tv_rating"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tv_rating"
-                app:layout_constraintTop_toTopOf="@id/tv_rating"
-                tools:text="12/12/2022" />
+            app:layout_constraintBottom_toBottomOf="@id/tv_rating"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_rating"
+            app:layout_constraintTop_toTopOf="@id/tv_rating"
+            tools:text="12/12/2022" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-</layout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -3,15 +3,14 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
-    id("com.google.protobuf") version "0.9.4" apply true
 }
 
 android {
-    namespace = "com.muhmmad.movielist"
+    namespace = "com.movielist"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.muhmmad.movielist"
+        applicationId = "com.movielist"
         minSdk = 21
         targetSdk = 34
         versionCode = 1
@@ -38,7 +37,6 @@ android {
     }
     buildFeatures {
         viewBinding = true
-        dataBinding = true
     }
 }
 
@@ -48,40 +46,22 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
     implementation("io.coil-kt:coil:2.6.0")
-    implementation(libs.glide)
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
+
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
-    implementation(libs.androidx.datastore)
-    implementation(libs.protobuf.kotlin.lite)
+    api(project(":data"))
 
+    implementation(libs.androidx.datastore)
 }
 kapt {
     correctErrorTypes = true
-}
-
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:4.26.1"
-    }
-    generateProtoTasks {
-        all().forEach { task ->
-            task.builtins {
-                register("java") {
-                    option("lite")
-                }
-                register("kotlin") {
-                    option("lite")
-                }
-            }
-        }
-    }
 }
