@@ -3,12 +3,14 @@ package com.muhmmad.movielist.presentation.movies
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.muhmmad.movielist.R
 import com.muhmmad.movielist.data.entity.Movie
 import com.muhmmad.movielist.databinding.MovieLayoutBinding
+import com.muhmmad.movielist.presentation.utils.DiffUtilCallback
 
 class MoviesAdapter(
     private val onItemClickListener: (movie: Movie) -> Unit,
@@ -52,11 +54,12 @@ class MoviesAdapter(
         }
     }
 
-    fun addItems(movies: List<Movie>) {
-        Log.i(TAG, "addItems: $movies")
+    fun setData(newData: List<Movie>) {
+        val diffCallback = DiffUtilCallback(data, newData)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
         data.clear()
-        data.addAll(movies)
-        notifyDataSetChanged()
+        data.addAll(newData)
+        diffResult.dispatchUpdatesTo(this)
     }
 }
 

@@ -1,5 +1,6 @@
 package com.muhmmad.movielist.presentation.movies
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.muhmmad.movielist.data.entity.Movie
@@ -11,7 +12,7 @@ import com.muhmmad.movielist.domain.use_case.RemoveMovieFromFavouritesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -27,7 +28,7 @@ class MoviesViewModel @Inject constructor(
     private val makeMovieFavouriteUseCase: MakeMovieFavouriteUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow(MoviesUIState())
-    val state = _state.asSharedFlow()
+    val state = _state.asStateFlow()
 
     fun getMovies(accessToken: String) {
         viewModelScope.launch(IO) {
@@ -74,6 +75,7 @@ class MoviesViewModel @Inject constructor(
 
     fun changeFavouriteStatus(movie: Movie, index: Int) {
         viewModelScope.launch(IO) {
+            Log.i(TAG, "changeFavouriteStatus: ")
             if (movie.isFavourite) removeMovieFromFavouritesUseCase(movie.id)
             else makeMovieFavouriteUseCase(movie.id)
             movie.isFavourite = !movie.isFavourite
@@ -81,9 +83,10 @@ class MoviesViewModel @Inject constructor(
             val movies = _state.value.movies.toMutableList()
             movies[index] = movie
 
-            _state.update {
-                it.copy(movies = movies)
-            }
+            Log.i(TAG, movies.toString())
+
+            _state.emit(MoviesUIState(movies = movies))
+            Log.i(TAG, "update")
         }
     }
 

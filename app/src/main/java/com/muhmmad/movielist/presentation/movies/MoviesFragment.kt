@@ -1,6 +1,7 @@
 package com.muhmmad.movielist.presentation.movies
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,8 @@ import com.muhmmad.movielist.databinding.FragmentMoviesBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+
+private const val TAG = "MoviesFragment"
 
 @AndroidEntryPoint
 class MoviesFragment : Fragment() {
@@ -46,9 +49,10 @@ class MoviesFragment : Fragment() {
     private fun collectData() {
         lifecycleScope.launch {
             viewModel.state.collectLatest {
+                Log.i(TAG, "collect")
                 binding.loadingProgress.isVisible = it.isLoading
                 if (it.movies.isNotEmpty()) {
-                    moviesAdapter.addItems(it.movies)
+                    moviesAdapter.setData(it.movies)
                 }
             }
         }
