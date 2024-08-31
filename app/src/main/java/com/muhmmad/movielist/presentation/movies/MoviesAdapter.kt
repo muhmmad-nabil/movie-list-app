@@ -14,8 +14,7 @@ import com.muhmmad.movielist.presentation.utils.DiffUtilCallback
 class MoviesAdapter(
     private val onItemClickListener: (movie: Movie) -> Unit,
     private val onFavouriteClickListener: (movie: Movie, index: Int, adapter: MoviesAdapter) -> Unit
-) :
-    RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
     private val data: MutableList<Movie> = mutableListOf()
 
     class ViewHolder(val binding: MovieLayoutBinding) : RecyclerView.ViewHolder(binding.root)
