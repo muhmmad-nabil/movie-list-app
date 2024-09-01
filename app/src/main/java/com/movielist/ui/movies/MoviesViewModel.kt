@@ -10,13 +10,15 @@ import com.movielist.domain.usecase.RemoveMovieFromFavouritesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.movielist.domain.entity.Resource.Loading
 import com.movielist.domain.entity.Resource.Success
 import com.movielist.domain.entity.Resource.Error
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+
 
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
@@ -30,6 +32,7 @@ class MoviesViewModel @Inject constructor(
 
     fun getMovies() {
         viewModelScope.launch(IO) {
+            _state.update { it.copy(isLoading = true) }
             getMoviesUseCase.invoke().let { response ->
                 when (response) {
                     is Loading -> {

@@ -47,9 +47,10 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
+    testImplementation(libs.kotlinx.coroutines.test)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
@@ -58,9 +59,11 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
-    api(project(":data"))
+    implementation(project(":data"))
 
     implementation(libs.androidx.datastore)
+
+    implementation(libs.retrofit)
 }
 kapt {
     correctErrorTypes = true
